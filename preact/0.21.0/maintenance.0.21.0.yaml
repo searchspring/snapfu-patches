@@ -1,0 +1,7 @@
+version: 0.21.0
+description: 'moving to open source packages'
+
+maintenance:
+    run: |
+        rm .npmrc:
+        cp patch/.gitignore ./gitignore
