@@ -2,7 +2,7 @@
 This document describes how to utilize the `edit-json` file action.
 
 ## Changes
-After providing the file selector `action` and `changes` are then specified - for editing JSON fields the `action` is "edit-json". The `changes` property is an array of modifications to make to the file; available changes are shown below.
+After providing the file selector, `action` and `changes` are then specified - for editing JSON fields the `action` is "edit-json". The `changes` property is an array of modifications to make to the file; available changes are shown below.
 
 Each change allows for two different methods of accessing the property to modify: `properties` and `path`. When using `properties` you provide an object that defines the path and values. With `path` an optional `value` or `values` can be provided as needed. These are further explained below and examples are provided.
 
@@ -25,7 +25,9 @@ steps:
                         }
 ```
 
-When using `path` the location of the property to alter is provided in an array, if no `value` is provided the property is removed. A `value` or `values` can be provided to specify removing specific values from an array. Using `path` also allows the specification of an array index within the path - making it easy to target properties of arrays. The example below accomplishes the same as the example above, but using the `path` method.
+When using `path`, the location of the property to alter is provided in an array format. If no `value` is provided the property is removed. A `value` or `values` can be provided to specify removing specific values from an existing array. Using `path` also allows the specification of an array index within the path - making it easy to target properties of arrays.
+
+The example below accomplishes the same as the example above, but using the `path` method.
 
 ```yaml
 steps:
@@ -43,9 +45,9 @@ steps:
 ```
 
 ### `update`
-Update is used to add a new key/value, alter an existing one or add to an array.
+Update is used to add a new key/value, alter an existing property, or add to an array.
 
-When using `properties` the keys provided are changed, but any other keys and values within the objecte are preserved. This is useful when updating dependencies as these can easily be copy/pasted. When altering an existing array using `properties` the existing array will *always* be appended to.
+When using `properties`, the keys provided are updated, but any other keys and values within the objecte are preserved. This method allows for modifiying multipe properties utilizing a single update entry. This is useful when updating dependencies, as these can easily be copy/pasted into a new patch file. When altering an existing array using `properties`, the existing array will *always* be appended to.
 
 The example below updates the Snap dependencies (keeping the rest of the dependencies in place) and adds two new tags to the `searchspring.tags` property.
 ```yaml
@@ -66,7 +68,9 @@ steps:
                     }
 ```
 
-Using the `path` method is more verbose, as each path and value must be specified in a separate `update` statement. The verboseness of this method provides more control however, allowing one to specify how to add to existing arrays by providing a `modifier`. The `modifier` currently supports `set`, `append` and `prepend` - `set` is the default if none is provided and will set the property to the provided value (or values).
+Using the `path` method is more verbose, as each path and value must be specified in a separate `update` statement. The verboseness of this method provides more control however, allowing one to specify how to add to existing arrays by providing a `modifier`. The `modifier` currently supports `set`, `append` and `prepend` - `set` is the default if none is provided and will set the property to the provided value (or values), replacing any existing value(s).
+
+The example below accomplishes the same updates as the example above, but by utilizing the `path` method.
 
 ```yaml
 steps:
