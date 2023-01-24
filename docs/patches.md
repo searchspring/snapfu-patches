@@ -34,7 +34,18 @@ The description describes the changes being made.
 These are the steps to take when applying the patch. Any number of steps can be defined and are run sequentially.
 
 ### Step type `run`
-Various commands can be executed using the `run` step. In most cases this command would be used to copy over new files, remove existing files or rename files. The commands used here expect a Unix environment of some sort. Commonly utilized commands might include the `cp`, `mv` and `rm` commands.
+Various commands can be executed using the `run` step. These commands assume that the patches are being applied within a Unix enviroment.
+
+In most cases this command would be used to copy over new files, remove existing files or rename files. The commands used here expect a Unix environment of some sort. Commonly utilized commands might include the `cp`, `mv` and `rm` commands.
+
+The example below modifies the `.gitignore` file by appending two new lines.
+
+```yaml
+steps:
+    # add a line to .gitignore to ignore future patch files
+    - run: |
+            echo '\n\n# ignore patch\npatch' >> .gitignore
+```
 
 ### Step type `files`
 File manipulation currently supports modification of both JSON and YAML files, with plans to allow for more generic file editing (find/replace) in the future.

@@ -68,7 +68,7 @@ steps:
                     }
 ```
 
-Using the `path` method is more verbose, as each path and value must be specified in a separate `update` statement. The verboseness of this method provides more control however, allowing one to specify how to add to existing arrays by providing a `modifier`. The `modifier` currently supports `set`, `append` and `prepend` - `set` is the default if none is provided and will set the property to the provided value (or values), replacing any existing value(s).
+Using the `path` method is more verbose, as each path and value must be specified in a separate `update` statement. The verboseness of this method does however provide more control; allowing specification on how to alter existing arrays by providing a `modifier` property. The `modifier` currently supports `set`, `append` and `prepend` - `set` is the default if none is provided and will set the property to the provided value (or values), replacing any existing value(s).
 
 The example below accomplishes the same updates as the example above, but by utilizing the `path` method.
 

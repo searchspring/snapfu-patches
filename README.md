@@ -1,5 +1,7 @@
 # Snapfu Patches
-This repository contains patch files utilized by Snapfu to update Snap projects. Patch files are ordered by framework and version. Patch versions are automatically created when a new version of Snap is released - this is done within the Snap monorepo repository.
+This repository contains patch files utilized by Snapfu to update Snap projects. Patch files are ordered by framework and version and currently only support application within a Unix enviroment.
+
+Patch versions are automatically created when a new version of Snap is released - this is done within the Snap monorepo repository.
 
 ## Patch Version Files
 All files with the version directory will be copied into the project's `./patch` directory during patch application. Subsequent patch version applications will clear this directory to prevent contamination.
