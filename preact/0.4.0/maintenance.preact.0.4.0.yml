@@ -1,5 +1,5 @@
 version: 0.4.0
-description: 'update support files'
+description: 'normalize support files'
 
 steps:
     # normalize set of cypress files
@@ -8,8 +8,12 @@ steps:
             cp ./patch/tests/cypress/support/commands.js ./tests/cypress/support/commands.js
             cp ./patch/tests/cypress/support/index.js ./tests/cypress/support/index.js
             cp ./patch/tests/cypress/plugins/index.js ./tests/cypress/plugins/index.js
-            cp ./patch/webpack.common.js ./webpack.common.js
 
-    # adding classname to style blocks
+    # normalize webpack configs
+    # * adding classname to style blocks
+    # * adding webSocketURL.hostname
     - run: |
             cp ./patch/webpack.common.js ./webpack.common.js
+            cp ./patch/webpack.dev.js ./webpack.dev.js
+            cp ./patch/webpack.modern.js ./webpack.modern.js
+            cp ./patch/webpack.universal.js ./webpack.universal.js

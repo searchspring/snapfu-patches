@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const childProcess = require('child_process');
+const path = require('path');
 
 // determine branch name for branch override usage
 const branchName = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
@@ -8,6 +9,9 @@ const branchName = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toSt
 const styleClass = 'ss-snap-bundle-styles';
 
 module.exports = {
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+	},
 	stats: {
 		modulesSort: 'size',
 		modulesSpace: 70,
