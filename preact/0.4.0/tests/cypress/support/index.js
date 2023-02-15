@@ -10,7 +10,7 @@ import './commands';
 
 // ignore 3rd party uncaught exceptions - but not bundle exceptions
 Cypress.on('uncaught:exception', (err) => {
-	if (err.stack.match(/\/\/localhost:\d+\/bundle\./)){
+	if (err.stack.match(/\/\/localhost:\d+\/bundle\./)) {
 		return true;
 	}
 
