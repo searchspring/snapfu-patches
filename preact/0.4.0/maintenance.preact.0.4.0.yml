@@ -4,7 +4,7 @@ description: 'adjust github action for future updates'
 steps:
     # add a line to .gitignore to ignore future patch files
     - run: |
-            echo '\n\n# ignore patch\npatch' >> .gitignore
+        grep -qo '^patch$' .gitignore || echo '\n\n# ignore patch\npatch' >> .gitignore
     - files:
         .github/workflows/deploy.yml:
             action: edit-yaml
