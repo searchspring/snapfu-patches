@@ -6,6 +6,12 @@ steps:
         package.json:
             action: edit-json
             changes:
+                # fix clean script
+                - update:
+                    properties:
+                        "scripts": {
+                            "clean": "rm -rf ./node_modules && rm -f ./package-lock.json"
+                        }
                 # normalize devDependencies
                 - update:
                     properties:
