@@ -26,6 +26,9 @@ steps:
                 # update webpack dev server
                 - update:
                     properties: {
+                        scripts: {
+                            "test:e2e": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.e2e.js & (cypress run --project tests && kill $(lsof -ti:3333,8888))"
+                        },
                         devDependencies: {
                             "webpack-dev-server": "^4.13.1",
                         }
