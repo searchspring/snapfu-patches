@@ -16,3 +16,5 @@ beforeEach(() => {
 		req.destroy();
 	});
 });
+
+export const ignoredErrors = [];
