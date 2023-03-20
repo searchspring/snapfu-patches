@@ -1,8 +1,8 @@
+// DO NOT EDIT - THIS FILE CAN/WILL BE REPLACED!!!
 // ***********************************************
 // Custom Snap Cypress Commands
 //
-// For more comprehensive examples of custom
-// commands please read more here:
+// For more comprehensive examples:
 // https://on.cypress.io/custom-commands
 // ***********************************************
 

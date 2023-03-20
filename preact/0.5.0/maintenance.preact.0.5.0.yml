@@ -7,6 +7,7 @@ steps:
             cp ./patch/tests/cypress.json ./tests/cypress.json
             cp ./patch/tests/cypress/support/commands.js ./tests/cypress/support/commands.js
             cp ./patch/tests/cypress/support/index.js ./tests/cypress/support/index.js
+            cp ./patch/tests/cypress/support/custom.js ./tests/cypress/support/custom.js
             cp ./patch/tests/cypress/plugins/index.js ./tests/cypress/plugins/index.js
 
     # normalize webpack configs
