@@ -1,9 +1,7 @@
 // ***********************************************************
 // Custom Snap Cypress Custom Configuration
 //
-// This file should be utilized for all custom cypress changes.
 // Typically this file would contain custom intercepts.
-//
 // You can read more here:
 // https://on.cypress.io/configuration
 // https://docs.cypress.io/api/commands/intercept
