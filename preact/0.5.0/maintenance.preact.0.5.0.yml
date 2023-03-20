@@ -18,3 +18,15 @@ steps:
             cp ./patch/webpack.dev.js ./webpack.dev.js
             cp ./patch/webpack.modern.js ./webpack.modern.js
             cp ./patch/webpack.universal.js ./webpack.universal.js
+
+    - files:
+        package.json:
+            action: edit-json
+            changes:
+                # update webpack dev server
+                - update:
+                    properties: {
+                        devDependencies: {
+                            "webpack-dev-server": "^4.13.1",
+                        }
+                    }
