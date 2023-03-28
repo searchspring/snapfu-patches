@@ -13,7 +13,6 @@ import { ignoredErrors } from "./custom";
 
 // ignore 3rd party uncaught exceptions - but not bundle exceptions
 Cypress.on('uncaught:exception', (err) => {
-	
 	if (ignoredErrors?.length) {
 		for (let i = 0; i < ignoredErrors.length; i++) {
 			const checkFor = new RegExp(ignoredErrors[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
