@@ -6,7 +6,6 @@ steps:
         package.json:
             action: edit-json
             changes:
-                # update snap packages and normalize other core dependencies
                 - update:
                     properties:
                         "dependencies": {
