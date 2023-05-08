@@ -1,5 +1,5 @@
-version: 0.44.2
-description: 'release 0.44.2'
+version: 0.44.3
+description: 'release 0.44.3'
 
 steps:
     - files:
@@ -10,8 +10,8 @@ steps:
                 - update:
                     properties:
                         "dependencies": {
-                            "@searchspring/snap-preact": "0.44.2",
-                            "@searchspring/snap-preact-components": "0.44.2",
+                            "@searchspring/snap-preact": "0.44.3",
+                            "@searchspring/snap-preact-components": "0.44.3",
                             "mobx": "6.9.0",
                             "mobx-react": "7.6.0",
                             "preact": "10.9.0"
