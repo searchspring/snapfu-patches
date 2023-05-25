@@ -1,0 +1,14 @@
+version: 0.44.3
+description: 'release 0.44.3'
+
+steps:
+    - files:
+        package.json:
+            action: edit-json
+            changes:
+                - update:
+                    properties:
+                        "dependencies": {
+                            "@searchspring/snap-vue": "0.44.3",
+                            "@searchspring/snap-vue-components": "0.44.3"
+                        }
