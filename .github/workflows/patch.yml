@@ -1,0 +1,22 @@
+name: Patch
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  Publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repositiory
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: Set Github credentials
+        id: variables
+        run: |
+          echo "merged: ${{ github.event.pull_request.merged }}"
+          echo "branch: ${{ github.head_ref }}"
+      
