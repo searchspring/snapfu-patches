@@ -18,15 +18,8 @@ jobs:
       - name: Set Github credentials
         id: variables
         run: |
-           echo "one: ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
-
-           echo "two: ${{$GITHUB_HEAD_REF}}"
-           echo "two: ${{GITHUB_HEAD_REF}}"
-           echo "two: ${$GITHUB_HEAD_REF}"
-           echo "two: $GITHUB_HEAD_REF"
-
-           echo "three: ${$GITHUB_REF}"
-           echo "three: $GITHUB_REF"
-           
+          echo "one: ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          echo "two: $GITHUB_HEAD_REF"
+          echo "three: $GITHUB_REF"
           echo "${{ github.head_ref }}"
-      
+          
