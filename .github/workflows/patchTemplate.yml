@@ -9,7 +9,7 @@ on:
 jobs:
   Publish:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == 'true' && startsWith( github.head_ref, 'patch-generate-' ) == 'true'
+    if: github.event.pull_request.merged == true && startsWith( github.head_ref, 'patch-generate-' ) == true
     steps:
       - name: Extract Variables
         id: variables
