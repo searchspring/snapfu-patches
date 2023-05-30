@@ -7,9 +7,26 @@ on:
       - main
 
 jobs:
-  Publish:
+  template-matrix:
     runs-on: ubuntu-latest
+    steps:
+      - id: templates
+        run: |
+          framework=`echo '${{ github.head_ref }}' | jq -Rr 'split("-")[2]'`;
+          templates=$(gh search repos --owner searchspring "snapfu-template-$framework" --json name --jq '[.[].name]')
+          echo "templates=$templates" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
+    outputs:
+      templates: ${{ steps.templates.outputs.templates }}
+  PatchTemplate:
     if: github.event.pull_request.merged == true && startsWith( github.head_ref, 'patch-generate-' ) == true
+    runs-on: ubuntu-latest
+    needs:
+      - template-matrix
+    strategy:
+      matrix:
+        template: ${{ fromJSON(needs.template-matrix.outputs.templates) }}
     steps:
       - name: Extract Variables
         id: variables
@@ -32,42 +49,46 @@ jobs:
             echo "Could not determine version";
             exit 1;
           fi;
-      
+
+      - name: Setup Node
+        id: setup-node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Snapfu
+        run: |
+          npm install -g snapfu
+
       - name: Checkout Template
         uses: actions/checkout@v3
         with:
-          repository: "searchspring/snapfu-template-${{ steps.variables.outputs.framework }}"
-          path: "snapfu-template-${{ steps.variables.outputs.framework }}"
+          repository: "searchspring/${{ matrix.template }}"
+          path: "${{ matrix.template }}"
           ref: "production"
           token: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
 
       - name: Patch Template
-        working-directory: snapfu-template-${{ steps.variables.outputs.framework }}
+        working-directory: ${{ matrix.template }}
         run: |
           git config --global user.name "searchspring-machine"
           git config --global user.email "machine@searchspring.com"
-          
-          git checkout -b patch-template-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}
-          
-          # update searchspring version
-          contents="$(jq '.searchspring .version = "${{ steps.variables.outputs.version }}"' < package.json | unexpand -t2)"
-          echo -E "${contents}" > package.json
-
-          # update snap-[framework] dependancy
-          contents="$(jq '.dependencies ."@searchspring/snap-${{ steps.variables.outputs.framework }}" = "${{ steps.variables.outputs.version }}"' < package.json | unexpand -t2)"
-          echo -E "${contents}" > package.json
-
-          # update snap-[framework]-components dependancy
-          contents="$(jq '.dependencies ."@searchspring/snap-${{ steps.variables.outputs.framework }}-components" = "${{ steps.variables.outputs.version }}"' < package.json | unexpand -t2)"
-          echo -E "${contents}" > package.json
-
-          git add package.json
+          git checkout -b patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}
+          snapfu patch apply ${{ steps.variables.outputs.version }}
+          touch test.txt && echo "test" >> test.txt
+          git add .
           git commit -m "auto generated template patch from 'Patch Template' action workflow"
-          git push -u origin patch-template-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}
+          git push -u origin patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}
  
       - name: Create PR
         run: |
-          gh pr create --title "Patch Template ${{ steps.variables.outputs.framework }}/${{ steps.variables.outputs.version }}" --body "" --repo "https://github.com/searchspring/snapfu-template-${{ steps.variables.outputs.framework }}" --base "production" --head "patch-template-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}" --project "Snap Beta" --reviewer "searchspring/snap-team"
+          gh pr create \
+            --title "Patch Template ${{ matrix.template }} to ${{ steps.variables.outputs.version }}" \
+            --body "" \
+            --repo "https://github.com/searchspring/${{ matrix.template }}" \
+            --base "production" \
+            --head "patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}" \
+            --project "Snap Beta" \
+            --reviewer "searchspring/snap-team"
         env:
           GITHUB_TOKEN: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
-
