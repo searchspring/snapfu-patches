@@ -53,15 +53,15 @@ jobs:
           git checkout -b patch-template-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}
           
           # update searchspring version
-          contents="$(jq '.searchspring .version = "${{ steps.variables.outputs.version }}"' < package.json)"
+          contents="$(jq '.searchspring .version = "${{ steps.variables.outputs.version }}"' < package.json | unexpand -t2)"
           echo -E "${contents}" > package.json
 
           # update snap-[framework] dependancy
-          contents="$(jq '.dependencies ."@searchspring/snap-${{ steps.variables.outputs.framework }}" = "${{ steps.variables.outputs.version }}"' < package.json)"
+          contents="$(jq '.dependencies ."@searchspring/snap-${{ steps.variables.outputs.framework }}" = "${{ steps.variables.outputs.version }}"' < package.json | unexpand -t2)"
           echo -E "${contents}" > package.json
 
           # update snap-[framework]-components dependancy
-          contents="$(jq '.dependencies ."@searchspring/snap-${{ steps.variables.outputs.framework }}-components" = "${{ steps.variables.outputs.version }}"' < package.json)"
+          contents="$(jq '.dependencies ."@searchspring/snap-${{ steps.variables.outputs.framework }}-components" = "${{ steps.variables.outputs.version }}"' < package.json | unexpand -t2)"
           echo -E "${contents}" > package.json
 
           git add package.json
