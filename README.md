@@ -9,6 +9,7 @@
 
 
 
+
 This repository contains patch files utilized by Snapfu to update Snap projects. Patch files are ordered by framework and version and currently only support application within a Unix enviroment.
 
 Patch versions are automatically created when a new version of Snap is released - this is done within the Snap monorepo repository.
