@@ -19,8 +19,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
     outputs:
       templates: ${{ steps.templates.outputs.templates }}
-  PatchTemplate:
-    if: github.event.pull_request.merged == true && startsWith( github.head_ref, 'patch-generate-' ) == true
+  patch-template:
+    if: github.event.pull_request.merged == true && startsWith( github.head_ref, 'patch-generate-' ) == true && needs.template-matrix.outputs.templates != '[]'
     runs-on: ubuntu-latest
     needs:
       - template-matrix
