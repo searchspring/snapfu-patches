@@ -73,11 +73,11 @@ jobs:
         run: |
           git config --global user.name "searchspring-machine"
           git config --global user.email "machine@searchspring.com"
-          git checkout -b patch-${{ matrix.template }}-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}
-          snapfu patch apply ${{ steps.variables.outputs.version }}"
+          git checkout -b patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}
+          snapfu patch apply ${{ steps.variables.outputs.version }}
           git add .
           git commit -m "auto generated template patch from 'Patch Template' action workflow"
-          git push -u origin patch-${{ matrix.template }}-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}
+          git push -u origin patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}
  
       - name: Create PR
         run: |
@@ -86,7 +86,7 @@ jobs:
             --body "" \
             --repo "https://github.com/searchspring/${{ matrix.template }}" \
             --base "production" \
-            --head "patch-${{ matrix.template }}-${{ steps.variables.outputs.framework }}-${{ steps.variables.outputs.version }}" \
+            --head "patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}" \
             --project "Snap Beta" \
             --reviewer "searchspring/snap-team"
         env:
