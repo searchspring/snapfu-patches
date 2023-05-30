@@ -1,0 +1,11 @@
+jobs:
+  template-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - id: templates
+        run: |
+          framework=`echo '${{ github.head_ref }}' | jq -Rr 'split("-")[2]'`;
+          templates=$(gh search repos --owner searchspring "snapfu-template-$framework" --json name --jq '[.[].name]')
+          echo "templates=$templates" >> $GITHUB_OUTPUT
+    outputs:
+      templates: ${{ toJSON(steps.templates.outputs.templates) }}
