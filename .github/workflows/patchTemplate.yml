@@ -23,10 +23,15 @@ jobs:
           echo "Using version: $version";
 
       - name: Validate Variables
-        if: steps.variables.outputs.framework == "" || steps.variables.outputs.version == ""
         run: |
-          echo "Could not extract Framework or Version from branch name"
-          exit 1;
+          if [ "${{ steps.variables.outputs.framework }}" == "" ]; then 
+            echo "Could not determine framework";
+            exit 1;
+          fi;
+          if [ "${{ steps.variables.outputs.version }}" == "" ]; then 
+            echo "Could not determine version";
+            exit 1;
+          fi;
       
       - name: Checkout Template
         uses: actions/checkout@v3
