@@ -9,11 +9,13 @@ on:
 jobs:
   Publish:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == 'true' && startsWith( github.head_ref, 'patch-generate-' )
     steps:
       - name: Extract Variables
         id: variables
         run: |
+          echo "github.event.pull_request.merged: ${{ github.event.pull_request.merged }}";
+          echo "github.head_ref: ${{ github.head_ref }} ${{ startsWith( github.head_ref, 'patch-generate-' ) }}";
+
           framework=`echo '${{ github.head_ref }}' | jq -R 'split("-")[2]'`;
           echo "::set-output name=framework::$framework";
           echo "Using framework: $framework";
