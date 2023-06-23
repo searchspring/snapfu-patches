@@ -2,7 +2,7 @@ version: 0.45.1
 description: 'Upgrade Cypress'
 
 steps:
-    # normalize set of cypress files
+    # execute Cypress migration script
     - run: |
         sh ./patch/migrateCypress.sh
 
