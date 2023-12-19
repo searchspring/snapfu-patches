@@ -1,4 +1,4 @@
-name: Patch Template
+name: Patch Scaffolds
 
 on:
   pull_request:
@@ -7,26 +7,26 @@ on:
       - main
 
 jobs:
-  template-matrix:
+  scaffold-matrix:
     runs-on: ubuntu-latest
     steps:
-      - id: templates
+      - id: scaffolds
         run: |
           framework=`echo '${{ github.head_ref }}' | jq -Rr 'split("-")[2]'`;
-          templates=$(gh search repos --owner searchspring "snapfu-template-$framework" --json name --jq '[.[].name]')
-          echo "templates=$templates" >> $GITHUB_OUTPUT
+          scaffolds=$(gh search repos --owner searchspring "snapfu-scaffold-$framework" --json name --jq '[.[].name]')
+          echo "scaffolds=$scaffolds" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
     outputs:
-      templates: ${{ steps.templates.outputs.templates }}
-  patch-template:
-    if: github.event.pull_request.merged == true && startsWith( github.head_ref, 'patch-generate-' ) == true && needs.template-matrix.outputs.templates != '[]'
+      scaffolds: ${{ steps.scaffolds.outputs.scaffolds }}
+  patch-scaffold:
+    if: github.event.pull_request.merged == true && startsWith( github.head_ref, 'patch-generate-' ) == true && needs.scaffold-matrix.outputs.scaffolds != '[]'
     runs-on: ubuntu-latest
     needs:
-      - template-matrix
+      - scaffold-matrix
     strategy:
       matrix:
-        template: ${{ fromJSON(needs.template-matrix.outputs.templates) }}
+        scaffold: ${{ fromJSON(needs.scaffold-matrix.outputs.scaffolds) }}
     steps:
       - name: Extract Variables
         id: variables
@@ -60,34 +60,34 @@ jobs:
         run: |
           npm install -g snapfu
 
-      - name: Checkout Template
+      - name: Checkout Scaffold
         uses: actions/checkout@v3
         with:
-          repository: "searchspring/${{ matrix.template }}"
-          path: "${{ matrix.template }}"
+          repository: "searchspring/${{ matrix.scaffold }}"
+          path: "${{ matrix.scaffold }}"
           ref: "production"
           token: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
 
-      - name: Patch Template
-        working-directory: ${{ matrix.template }}
+      - name: Patch Scaffold
+        working-directory: ${{ matrix.scaffold }}
         run: |
           git config --global user.name "searchspring-machine"
           git config --global user.email "machine@searchspring.com"
-          git checkout -b patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}
+          git checkout -b patch-${{ matrix.scaffold }}-${{ steps.variables.outputs.version }}
           snapfu patch fetch
           snapfu patch apply ${{ steps.variables.outputs.version }} --ci
           git add .
-          git commit -m "auto generated template patch from 'Patch Template' action workflow"
-          git push -u origin patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}
+          git commit -m "auto generated scaffolding patch from 'Patch Scaffold' action workflow"
+          git push -u origin patch-${{ matrix.scaffold }}-${{ steps.variables.outputs.version }}
  
       - name: Create PR
         run: |
           gh pr create \
-            --title "Patch Template ${{ matrix.template }} to ${{ steps.variables.outputs.version }}" \
+            --title "Patch Scaffold ${{ matrix.scaffold }} to ${{ steps.variables.outputs.version }}" \
             --body "" \
-            --repo "https://github.com/searchspring/${{ matrix.template }}" \
+            --repo "https://github.com/searchspring/${{ matrix.scaffold }}" \
             --base "production" \
-            --head "patch-${{ matrix.template }}-${{ steps.variables.outputs.version }}" \
+            --head "patch-${{ matrix.scaffold }}-${{ steps.variables.outputs.version }}" \
             --project "Snap Beta" \
             --reviewer "searchspring/snap-team"
         env:
