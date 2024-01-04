@@ -6,6 +6,9 @@ steps:
         package.json:
             action: edit-json
             changes:
+                - move:
+                    path: ['searchspring', 'template']
+                    newPath: ['searchspring', 'scaffold']
                 - update:
                     properties:
                         "dependencies": {
