@@ -114,3 +114,23 @@ steps:
                 - remove:
                     path: ['searchspring', 'tags', 0]
 ```
+
+### `move`
+To move a key or an entry (or rename).
+
+This action does not support `properties` usage.
+
+When using `path`, the location of the property to alter is provided in an array format. If no `newPath` is provided the action will do nothing. If the `newPath` already exists, the action will do nothing unless a modifier is provided. There are two supported modifiers that can be used when we want to deal with an existing `newPath`: `merge` and `replace`. When `merge` is used, we will attempt to merge the original object with the existing one. When `replace` is used, we will overwrite the existing entry.
+
+The example below will move (essentially rename) `searchspring.template` -> `searchspring.scaffold`.
+
+```yaml
+steps:
+    - files:
+        package.json:
+            action: edit-json
+            changes:
+                - move:
+                    path: ['searchspring', 'template']
+                    newPath: ['searchspring', 'scaffold']
+```
