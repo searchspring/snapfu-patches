@@ -1,0 +1,14 @@
+version: 0.53.0
+description: 'Upgrade Cypress to 13.7.1'
+
+steps:
+    - files:
+        package.json:
+            action: edit-json
+            changes:
+                - update:
+                    properties: {
+                        devDependencies: {
+                            "cypress": "^13.7.1",
+                        }
+                    }
