@@ -88,7 +88,7 @@ jobs:
             --repo "https://github.com/searchspring/${{ matrix.scaffold }}" \
             --base "production" \
             --head "patch-${{ matrix.scaffold }}-${{ steps.variables.outputs.version }}" \
-            --project "Snap Beta" \
+            --project "Snap" \
             --reviewer "searchspring/snap-team"
         env:
           GITHUB_TOKEN: ${{ secrets.MACHINE_ACTION_WORKFLOW_PAT }}
