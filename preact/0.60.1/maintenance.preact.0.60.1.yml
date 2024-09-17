@@ -7,8 +7,8 @@ steps:
             action: find-replace
             changes:
                 - replace:
-                      pattern: const profileKey = `\/api\/personalized-recommendations\/profile.json{.*;$
+                      pattern: const profileKey = `\/api\/personalized-recommendations\/profile.json{.*$
                       replacement: const profileKey = `/api/personalized-recommendations/profile.json/*`;
                 - replace:
-                      pattern: const recommendKey = `\/boost\/\${siteId}\/recommend{.*;$
+                      pattern: const recommendKey = `\/boost\/\${siteId}\/recommend{.*$
                       replacement: const recommendKey = `/boost/${siteId}/recommend/*`;
