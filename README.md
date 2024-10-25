@@ -6,7 +6,7 @@ Patch versions are automatically created when a new version of Snap is released 
 ## Patch Version Files
 All files with the version directory will be copied into the project's `./patch` directory during patch application. Subsequent patch version applications will clear this directory to prevent contamination.
 
-Valid patch file names (where `framework` and `version` match the directory structure the file is part of) and will be execusted in this order:
+Valid patch file names (where `framework` and `version` match the directory structure the file is part of) and will be executed in this order:
 `maintenance.{framework}.{version}.yml`
 `maintenance.{framework}.snap.{version}.yml` (only if project distribution is not templates)
 `maintenance.{framework}.snapTemplates.{version}.yml` (only if project distribution is templates)
