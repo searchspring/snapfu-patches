@@ -8,6 +8,6 @@ steps:
             changes:
                 - update:
                     properties:
-                        "dependencies": {
+                        "devDependencies": {
                             "sass": "1.78.0"
                         }
