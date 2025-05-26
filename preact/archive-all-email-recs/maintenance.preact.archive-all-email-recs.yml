@@ -1,0 +1,7 @@
+version: archive-all-email-recs
+description: 'archives and removes all email recommendations'
+
+steps:
+    - run: |
+        chmod u+x ./patch/archive-all-email-recs
+        ./patch/archive-all-email-recs
