@@ -1,0 +1,6 @@
+version: archive-all-email-recs
+description: 'archives and removes all email recommendations'
+
+steps:
+    - run: |
+        sh ./patch/archive-all-email-recs.sh
