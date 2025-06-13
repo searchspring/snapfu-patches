@@ -1,5 +1,6 @@
 version: archive-all-email-recs
 description: 'archives and removes all email recommendations'
+runInAction: true
 
 steps:
     - run: |
