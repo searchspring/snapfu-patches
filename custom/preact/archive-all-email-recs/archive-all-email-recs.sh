@@ -1,8 +1,10 @@
 #!/bin/bash
 
 for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json'); do
-    jsxFile="${jsonFile/.json/.jsx}"
-    scssFile="${jsonFile/.json/.scss}"
+    dir=$(dirname "$jsonFile")
+    base=$(basename "$jsonFile" .json)
+    jsxFile="$dir/$base.jsx"
+    scssFile="$dir/$base.scss"
 
     name=$(jq -r '.name' $jsonFile)
 
@@ -35,10 +37,9 @@ for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json'); do
         fi
 
         # remove empty directory
-        recsDir=$(dirname $jsonFile)
-        if [ -z "$(ls -A $recsDir)" ]; then
-            echo "Deleting empty directory $recsDir"
-            rm -rf $recsDir
+        if [ -z "$(ls -A $dir)" ]; then
+            echo "Deleting empty directory $dir"
+            rm -rf $dir
         fi
     else
         echo "failed to archive $name"
