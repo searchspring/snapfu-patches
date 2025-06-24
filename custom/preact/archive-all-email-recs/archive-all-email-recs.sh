@@ -8,7 +8,7 @@ for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json'); do
 
     name=$(jq -r '.name' $jsonFile)
 
-    if [ "$name" == "null" ]; then
+    if [ "$name" = "null" ]; then
         echo "name property in $jsonFile is not found"
         continue
     fi
