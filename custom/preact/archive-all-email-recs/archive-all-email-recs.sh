@@ -13,7 +13,7 @@ for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json'); do
         continue
     fi
 
-    snapfu recs archive $name --ci
+    snapfu recs archive $name production --ci
     status=$?
     if [ $status -eq 0 ]; then
         echo "snapfu successfully archived $name"
