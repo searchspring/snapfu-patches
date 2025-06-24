@@ -13,7 +13,7 @@ for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json'); do
         continue
     fi
 
-    snapfu recs archive $name --ci --secret-key="$SNAPFU_SECRET_KEY" --secrets-ci $SNAPFU_SECRETS_CI
+    snapfu recs archive $name --ci
     status=$?
     if [ $status -eq 0 ]; then
         echo "snapfu successfully archived $name"
