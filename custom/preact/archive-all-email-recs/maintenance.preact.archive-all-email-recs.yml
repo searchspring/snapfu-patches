@@ -11,5 +11,5 @@ steps:
             changes:
                 - replace: 
                     pattern: |
-                        Email: async \(\) => \(await import\('\.\/components\/recommendations\/Email'\)\)\.Email,
+                        Email: async \(\) => \(await import\('\.\/components\/recommendations\/Email'\)\)\.Email[,]?
                     replacement: "\n"
