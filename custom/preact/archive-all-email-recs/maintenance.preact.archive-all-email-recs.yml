@@ -5,3 +5,11 @@ runInAction: true
 steps:
     - run: |
         sh ./patch/archive-all-email-recs.sh
+    - files:
+        src/index.js:
+            action: find-replace
+            changes:
+                - replace: 
+                    pattern: |
+                        Email: async \(\) => \(await import\('\.\/components\/recommendations\/Email'\)\)\.Email[,]?
+                    replacement: "\n"
