@@ -1,11 +1,10 @@
 
-/// beacon2-tests start
+// begin beacon tracking testing
 describe('Tracking', () => {
-    /// beacon2-tests-autocomplete start
-    it('tracked autocomplete render, impression, clickthrough', () => {
-        const url = config.url;
+	it('makes api request', function () {
+		const url = config.url;
 
-        cy.visit(url);
+		cy.visit(url);
 		cy.addLocalSnap();
 
 		cy.waitForBundle().then(() => {
@@ -22,32 +21,33 @@ describe('Tracking', () => {
 			cy.get(config.selectors.website.openInputButton).first().click({ force: true });
 		}
 
-		cy.get(config.selectors.website.input).first().should('exist').focus().type(config.startingQuery, {force: true});
+		cy.get(config.selectors.website.input).first().should('exist').focus().type(config.startingQuery, { force: true });
 
 		cy.wait('@autocomplete').should('exist');
+	});
 
-		new Cypress.Promise.all([cy.wait(`@beacon2/autocomplete/render`)]).then(([render]) => {
+	it('tracks render', () => {
+		cy.wait(`@beacon2/autocomplete/render`).then((render) => {
 			expect(render.response.body).to.have.property('success').to.equal(true);
-		}).then(() => {
-			const firstResult = cy.get(`${config.selectors.autocomplete.result} a`).first();
-			if (firstResult) {
-				firstResult.click({ force: true });
-			} else {
-				const firstResult = cy.get(`${config.selectors.autocomplete.result}`).first();
-				firstResult.click({ force: true });
-			}
-
-			cy.wait(`@beacon2/autocomplete/clickthrough`).then(({ request, response }) => {
-				expect(response.body).to.have.property('success').to.equal(true);
-			});
 		});
+	});
 
-		//impression tracking?
-		// new Cypress.Promise.all([cy.wait(`@beacon2/autocomplete/impression`)]).then(([impression]) => {
-		// 	expect(impression.response.body).to.have.property('success').to.equal(true);
-		// })
+	// unskip the block below to add impression tracking testing
+	it.skip('tracks impression', () => {
+		cy.wait(`@beacon2/autocomplete/impression`).then((impression) => {
+			expect(impression.response.body).to.have.property('success').to.equal(true);
+		});
+	});
 
-    });
-    /// beacon2-tests-autocomplete end
+	it('tracks clickthrough', () => {
+		cy.get(`${config.selectors.autocomplete.result}[href], ${config.selectors.autocomplete.result} a[href]`)
+			.first()
+			.should('exist')
+			.click({ force: true });
+
+		cy.wait(`@beacon2/autocomplete/clickthrough`).then((clickthrough) => {
+			expect(clickthrough.response.body).to.have.property('success').to.equal(true);
+		});
+	});
 });
-/// beacon2-tests end
+// end beacon tracking testing
