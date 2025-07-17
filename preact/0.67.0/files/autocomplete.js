@@ -36,7 +36,7 @@ describe('Tracking', () => {
 		// });
 
 		// click tracking
-		firstResult.trigger('click', { preventDefault: true, force: true });
+		firstResult.trigger('click', { force: true });
 		cy.wait(`@beacon2/autocomplete/clickthrough`).then((clickthrough) => {
 			expect(clickthrough.response.body).to.have.property('success').to.equal(true);
 		});

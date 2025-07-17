@@ -18,6 +18,9 @@ describe('Tracking', () => {
 		if (config.disableGA) {
 			window[`ga-disable-${config.disableGA}`] = true;
 		}
+		cy.wait(`@beacon2/search/render`).then((render) => {
+			expect(render.response.body).to.have.property('success').to.equal(true);
+		});
 
 		const firstResult = cy.get(`${config.selectors.results.productWrapper}[href], ${config.selectors.results.productWrapper} a[href]`)
 			.first()
@@ -30,7 +33,7 @@ describe('Tracking', () => {
 		// });
 
 		// click tracking
-		firstResult.trigger('click', { preventDefault: true, force: true });
+		firstResult.trigger('click', { force: true });
 		cy.wait(`@beacon2/search/clickthrough`).then((clickthrough) => {
 			expect(clickthrough.response.body).to.have.property('success').to.equal(true);
 		});
