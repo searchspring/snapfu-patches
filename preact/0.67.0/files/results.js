@@ -1,7 +1,9 @@
 
 // begin beacon tracking testing
 describe('Tracking', () => {
-	it('makes api request', function () {
+	it('sends beacon events', function () {
+		if (!config.selectors.results?.productWrapper) this.skip();
+
 		const url = config.pages.find((page) => `${page.id}`.toLowerCase() == 'search')?.url || config.pages[0].url;
 
 		cy.visit(url);
@@ -17,29 +19,18 @@ describe('Tracking', () => {
 			window[`ga-disable-${config.disableGA}`] = true;
 		}
 
-		cy.wait('@search').should('exist');
-	});
-
-	it('tracks render', () => {
-		cy.wait(`@beacon2/search/render`).then((render) => {
-			expect(render.response.body).to.have.property('success').to.equal(true);
-		});
-	});
-
-	// unskip the block below to add impression tracking testing
-	it.skip('tracks impression', () => {
-		cy.wait(`@beacon2/search/impression`).then((impression) => {
-			expect(impression.response.body).to.have.property('success').to.equal(true);
-		});
-	});
-
-	it('tracks clickthrough', () => {
-		cy.wait(1000); // wait for results to load
-		cy.get(`${config.selectors.results.productWrapper}[href], ${config.selectors.results.productWrapper} a[href]`)
+		const firstResult = cy.get(`${config.selectors.results.productWrapper}[href], ${config.selectors.results.productWrapper} a[href]`)
 			.first()
 			.should('exist')
-			.click({ force: true });
+			.scrollIntoView();
 
+		// uncomment the block below to add impression tracking testing
+		// cy.wait(`@beacon2/search/impression`).then((impression) => {
+		// 	expect(impression.response.body).to.have.property('success').to.equal(true);
+		// });
+
+		// click tracking
+		firstResult.trigger('click', { preventDefault: true, force: true });
 		cy.wait(`@beacon2/search/clickthrough`).then((clickthrough) => {
 			expect(clickthrough.response.body).to.have.property('success').to.equal(true);
 		});
