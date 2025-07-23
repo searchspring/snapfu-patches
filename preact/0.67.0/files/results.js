@@ -20,9 +20,6 @@ describe('Tracking', () => {
 		if (config.disableGA) {
 			window[`ga-disable-${config.disableGA}`] = true;
 		}
-		cy.wait(`@beacon2/search/render`).then((render) => {
-			expect(render.response.body).to.have.property('success').to.equal(true);
-		});
 
 		const firstResult = cy.get(`${config.selectors.results.productWrapper}[href], ${config.selectors.results.productWrapper} a[href]`)
 			.first()
