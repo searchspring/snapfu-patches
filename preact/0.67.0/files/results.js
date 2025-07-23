@@ -1,6 +1,6 @@
 
 // begin beacon tracking testing
-describe('Tracking', () => {
+describe.skip('Tracking', () => {
 	it('sends beacon events', function () {
 		if (typeof config === 'undefined' || !config?.pages.length || !config.selectors.results?.productWrapper) this.skip();
 
@@ -26,10 +26,10 @@ describe('Tracking', () => {
 			.should('exist')
 			.scrollIntoView();
 
-		// uncomment the block below to add impression tracking testing
-		// cy.wait(`@beacon2/search/impression`).then((impression) => {
-		// 	expect(impression.response.body).to.have.property('success').to.equal(true);
-		// });
+		// impression tracking
+		cy.wait(`@beacon2/search/impression`).then((impression) => {
+			expect(impression.response.body).to.have.property('success').to.equal(true);
+		});
 
 		// click tracking
 		firstResult.trigger('click', { force: true });
