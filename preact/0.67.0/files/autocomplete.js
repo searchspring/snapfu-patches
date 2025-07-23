@@ -2,7 +2,7 @@
 // begin beacon tracking testing
 describe('Tracking', () => {
 	it('sends beacon events', function () {
-		if (!config?.selectors?.website?.input || !config?.startingQuery || !config.selectors.autocomplete.result) this.skip();
+		if (typeof config === 'undefined' || !config.url || !config?.selectors?.website?.input || !config?.startingQuery || !config.selectors.autocomplete.result) this.skip();
 
 		const url = config.url;
 

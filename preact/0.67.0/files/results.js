@@ -2,9 +2,11 @@
 // begin beacon tracking testing
 describe('Tracking', () => {
 	it('sends beacon events', function () {
-		if (!config.selectors.results?.productWrapper) this.skip();
+		if (typeof config === 'undefined' || !config?.pages.length || !config.selectors.results?.productWrapper) this.skip();
 
-		const url = config.pages.find((page) => `${page.id}`.toLowerCase() == 'search')?.url || config.pages[0].url;
+		const url = config?.pages?.find((page) => `${page.id}`.toLowerCase() == 'search')?.url || config.pages[0].url;
+
+		if (!url) this.skip();
 
 		cy.visit(url);
 		cy.addLocalSnap();
