@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json'); do
+for jsonFile in $(grep -rl 'snap/recommendation/email' . --include '*.json' | grep 'Email.json'); do
     dir=$(dirname "$jsonFile")
     base=$(basename "$jsonFile" .json)
     jsxFile="$dir/$base.jsx"
