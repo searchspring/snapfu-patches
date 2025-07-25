@@ -11,7 +11,7 @@ steps:
             changes:
                 - replace: 
                     pattern: |
-                        Email:\s*async\s*\(\)\s*=>\s*\(await import\(['"]\.\/components\/[Rr]ecommendations\/Email['"]\)\)\.Email[,]?
+                        Email:\s*async\s*\(\)\s*=>\s*\(await import\(['"]\.\/components\/[Rr]ecommendations\/Email['"]\)\)\.Email[,]
                     replacement: "\n"
                 - replace:
                     pattern: |
