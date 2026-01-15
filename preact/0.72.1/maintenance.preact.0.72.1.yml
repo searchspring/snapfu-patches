@@ -1,5 +1,5 @@
-version: 0.72.0
-description: 'maintenance 0.72.0 - build identification'
+version: 0.72.1
+description: 'maintenance 0.72.1 - build identification'
 
 steps:
     - run: |
