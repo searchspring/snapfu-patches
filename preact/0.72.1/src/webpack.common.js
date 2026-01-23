@@ -1,3 +1,6 @@
+// DO NOT EDIT - THIS FILE CAN/WILL BE REPLACED!!!
+// ***********************************************
+
 const webpack = require('webpack');
 const childProcess = require('child_process');
 const path = require('path');
