@@ -32,39 +32,11 @@ const universal = merge(common, {
 		],
 	},
 	devtool: 'source-map',
-	devServer: {
-		server: 'https',
-		port: 3333,
-		hot: true,
-		allowedHosts: 'all',
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-		},
-		static: {
-			directory: path.join(__dirname, 'public'),
-			publicPath: ['/'],
-			watch: true,
-		},
-		devMiddleware: {
-			publicPath: '/',
-		},
-		client: {
-			overlay: {
-				errors: true,
-				warnings: false,
-				runtimeErrors: false,
-			},
-			webSocketURL: {
-				hostname: 'localhost',
-			},
-		},
-	},
-	devtool: 'source-map',
 });
 
 const modern = merge(common, {
 	mode: 'development',
-	entry: './src/modern.js',
+	entry: './src/index.js',
 	output: {
 		filename: 'bundle.js',
 		chunkFilename: 'bundle.chunk.[fullhash:8].[id].js',
@@ -90,6 +62,34 @@ const modern = merge(common, {
 				},
 			},
 		],
+	},
+	devServer: {
+		server: 'https',
+		port: 3333,
+		hot: true,
+		allowedHosts: 'all',
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+		static: {
+			directory: path.join(__dirname, 'public'),
+			publicPath: ['/'],
+			watch: true,
+		},
+		devMiddleware: {
+			publicPath: '/',
+		},
+		client: {
+			logging: 'error',
+			overlay: {
+				errors: true,
+				warnings: false,
+				runtimeErrors: false,
+			},
+			webSocketURL: {
+				hostname: 'localhost',
+			},
+		},
 	},
 	devtool: 'source-map',
 });
