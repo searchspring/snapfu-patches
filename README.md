@@ -1,4 +1,8 @@
 # Snapfu Patches
+
+> [!WARNING]
+> **Deprecated** - this repository is no longer maintained. Patches now live in [snapfu-library](https://github.com/AthosCommerce/snapfu-library) - see [PATCHES.md](https://github.com/AthosCommerce/snapfu-library/blob/main/PATCHES.md). Update to the latest version of Snapfu to pick up patches from the new location.
+
 This repository contains patch files utilized by Snapfu to update Snap projects. Patch files are ordered by framework and version and currently only support application within a Unix enviroment.
 
 Patch versions are automatically created when a new version of Snap is released - this is done within the Snap monorepo repository.
